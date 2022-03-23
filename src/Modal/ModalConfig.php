@@ -20,7 +20,7 @@ use Contao\Model;
 use Contao\PageModel;
 use Contao\StringUtil;
 
-class Modal
+class ModalConfig
 {
     public function __construct(
         private InsertTagParser $tagParser,
