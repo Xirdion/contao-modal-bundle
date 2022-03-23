@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autoconfigure: true
+
+    Sowieso\ModalBundle\Controller\FrontendModule\ModalController:
+        arguments:
+            - '@contao.routing.scope_matcher'
+            - '@Sowieso\ModalBundle\Modal\Modal'
+        tags:
+            - { name: contao.frontend_module, category: application, type: sowiesoModal, template: mod_modal }
+
+    Sowieso\ModalBundle\Controller\ContentElement\ModalController:
+        arguments:
+            - '@contao.routing.scope_matcher'
+            - '@Sowieso\ModalBundle\Modal\Modal'
+        tags:
+            - { name: contao.content_element, category: links, type: sowiesoModal, template: ce_modal }

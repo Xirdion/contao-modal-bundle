@@ -1,0 +1,6 @@
+excluded_pages: Seiten ausschließen
+excluded_pages_info: Das Modal wird auf den ausgesuchten Seiten nicht ausgegeben.
+start: Start bei (Sekunden)
+start_info: Das Modal wird X-Sekunden, nachdem die Seite geladen worden ist, angezeigt.
+stop: Stop bis (Tagen)
+stop_info: Das Modal wird nach X-Tagen erst wieder angezeigt.

@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+
+  Sowieso\ModalBundle\EventListener\LoadDataContainerListener:
+    arguments:
+      - '@translator'
+    tags:
+      - { name: contao.hook, hook: loadDataContainer, method: onLoadDataContainer }
+
+  Sowieso\ModalBundle\EventListener\DataContainer\LoadDataContainerCallback:
+    arguments:
+      - '@request_stack'
+    tags:
+      - { name: contao.callback, table: tl_content, target: config.onload, method: onLoadDataContainer }
+      - { name: contao.callback, table: tl_module, target: config.onload, method: onLoadDataContainer }

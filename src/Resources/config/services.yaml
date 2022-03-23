@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autowire: true
+
+    Sowieso\ModalBundle\Modal\Modal:
+        arguments:
+            - '@contao.insert_tag.parser'
+            - '@contao.image.studio'

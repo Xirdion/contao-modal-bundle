@@ -1,0 +1,52 @@
+{
+  "name": "sowieso/contao-modal-bundle",
+  "type": "contao-bundle",
+  "description": "Add a modal element to your page",
+  "license":"AGPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "SowieSo GmbH & Co.KG",
+      "email": "development@sowieso.team",
+      "homepage": "https://sowieso.team"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "contao/core-bundle": "^4.13",
+    "contao/conflicts": "@dev"
+  },
+  "require-dev": {
+    "contao/manager-plugin": "^2.0",
+    "contao/test-case": "^4.6",
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "phpstan/phpstan": "^1.4",
+    "phpstan/phpstan-phpunit": "^1.0",
+    "phpstan/phpstan-symfony": "^1.1",
+    "phpunit/phpunit": "^9.5",
+    "roave/security-advisories": "dev-latest",
+    "slam/phpstan-extensions": "^6.0",
+    "thecodingmachine/phpstan-strict-rules": "^1.0"
+  },
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "allow-plugins": {
+      "contao-components/installer": true,
+      "contao/manager-plugin": true
+    }
+  },
+  "extra": {
+    "contao-manager-plugin": "Sowieso\\ModalBundle\\ContaoManager\\Plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sowieso\\ModalBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sowieso\\ModalBundle\\Tests\\": "tests/"
+    }
+  }
+}
