@@ -22,7 +22,7 @@ const modal = function () {
     // Automatically open the modals, if these have a start-time
     const modals = document.getElementsByClassName('js-modal');
     for (let i = 0; i < modals.length; i++) {
-        const startTime = modals[i].dataset.starttime;
+        const startTime = parseInt(modals[i].dataset.startTime);
         if (startTime) {
             startModal(modals[i], startTime);
         }
@@ -32,7 +32,7 @@ const modal = function () {
     function startModal(modal, startTime) {
         setTimeout(function () {
             showModal(modal, true);
-        }, parseInt(startTime));
+        }, startTime);
     }
 
     function showModal(modal, checkSession) {

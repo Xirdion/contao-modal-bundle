@@ -47,6 +47,7 @@ class Controller
         // Add the modal data to the template
         $templateData = array_merge($templateData, $modalData);
         $templateData['showModal'] = true;
+        $templateData['modalButton'] = $model->__get('modal_button');
         $templateData['modalStart'] = (int) $model->__get('modal_start');
         $templateData['modalStop'] = (int) $model->__get('modal_stop');
         $template->setData($templateData);

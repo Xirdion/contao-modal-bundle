@@ -6,8 +6,8 @@
 <?php $this->block('content'); ?>
 
 <?php if ($this->showModal): ?>
-    <?php if($this->modalButton): ?>
-        <button id="modal-button-<?= $this->modalId ?>" class="js-modal-button" data-modal="modal-<?= $this->modalId ?>"><?= $this->modalButton ?></button>
+    <?php if ($this->modalButton): ?>
+        <button id="modal-button-<?= $this->modalId ?>" class="js-modal-open modal-opener" data-modal="modal-<?= $this->modalId ?>"><?= $this->modalButton ?></button>
     <?php endif; ?>
     <div id="modal-<?= $this->modalId ?>" class="<?= $this->class ?> block modal js-modal" data-start-time="<?= ($this->modalStart * 1000) ?>" data-stop-time="<?= ($this->modalStop * 1000) ?>">
         <div class="modal-overlay">

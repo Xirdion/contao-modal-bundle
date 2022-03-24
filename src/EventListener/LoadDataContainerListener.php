@@ -150,7 +150,7 @@ class LoadDataContainerListener
             'exclude' => true,
             'inputType' => 'pageTree',
             'foreignKey' => 'tl_page.title',
-            'eval' => ['multiple' => true, 'fieldType' => 'checkbox', 'isSortable' => true, 'tl_cass' => 'clr'],
+            'eval' => ['multiple' => true, 'fieldType' => 'checkbox', 'isSortable' => true, 'tl_class' => 'clr'],
             'sql' => ['type' => 'blob', 'notnull' => false],
             'relation' => ['type' => 'hasMany', 'load' => 'lazy'],
         ];
