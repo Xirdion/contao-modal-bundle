@@ -4,12 +4,12 @@ services:
 
     Sowieso\ModalBundle\Controller\FrontendModule\ModalController:
         arguments:
-            - '@Sowieso\ModalBundle\Modal\ModalElement'
+            - '@Sowieso\ModalBundle\Modal\Controller'
         tags:
             - { name: contao.frontend_module, category: application, type: sowiesoModal, template: mod_modal }
 
     Sowieso\ModalBundle\Controller\ContentElement\ModalController:
         arguments:
-            - '@Sowieso\ModalBundle\Modal\ModalElement'
+            - '@Sowieso\ModalBundle\Modal\Controller'
         tags:
             - { name: contao.content_element, category: links, type: sowiesoModal, template: ce_modal }

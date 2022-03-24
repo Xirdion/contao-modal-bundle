@@ -16,7 +16,7 @@ use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\Template;
-use Sowieso\ModalBundle\Modal\ModalElement;
+use Sowieso\ModalBundle\Modal\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,17 +24,21 @@ use Symfony\Component\HttpFoundation\Response;
 class ModalController extends AbstractContentElementController
 {
     public function __construct(
-        private ModalElement $modal,
+        private Controller $modal,
     ) {
     }
 
+    /**
+     * Return the response generated from the template.
+     *
+     * @param Template     $template
+     * @param ContentModel $model
+     * @param Request      $request
+     *
+     * @return Response|null
+     */
     protected function getResponse(Template $template, ContentModel $model, Request $request): ?Response
     {
-        $this->modal->setTemplate($template);
-        $this->modal->setModel($model);
-        $this->modal->setRequest($request);
-        $this->modal->setPage($this->getPageModel());
-
-        return $this->modal->generateResponse();
+        return $this->modal->getResponse($template, $model, $request, $this->getPageModel());
     }
 }

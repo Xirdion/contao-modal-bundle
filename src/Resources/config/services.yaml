@@ -2,12 +2,12 @@ services:
     _defaults:
         autowire: true
 
-    Sowieso\ModalBundle\Modal\ModalConfig:
-        arguments:
-            - '@contao.insert_tag.parser'
-            - '@contao.image.studio'
-
-    Sowieso\ModalBundle\Modal\ModalElement:
+    Sowieso\ModalBundle\Modal\Builder:
         arguments:
             - '@contao.routing.scope_matcher'
-            - '@Sowieso\ModalBundle\Modal\ModalConfig'
+            - '@contao.image.studio'
+            - '@contao.insert_tag.parser'
+
+    Sowieso\ModalBundle\Modal\Controller:
+        arguments:
+            - '@Sowieso\ModalBundle\Modal\Builder'
