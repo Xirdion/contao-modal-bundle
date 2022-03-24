@@ -46,7 +46,13 @@ class Controller
 
         // Add the modal data to the template
         $templateData = array_merge($templateData, $modalData);
+        $templateData['showModal'] = true;
+        $templateData['modalStart'] = (int) $model->__get('modal_start');
+        $templateData['modalStop'] = (int) $model->__get('modal_stop');
         $template->setData($templateData);
+
+        $GLOBALS['TL_CSS']['modal'] = 'bundles/contaomodal/css/modal.min.css';
+        $GLOBALS['TL_BODY']['modal'] = Template::generateScriptTag('bundles/contaomodal/js/modal.min.js');
 
         return $template->getResponse();
     }

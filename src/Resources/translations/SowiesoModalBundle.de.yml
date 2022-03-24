@@ -1,3 +1,5 @@
+button: Button (option)
+button_info: Ein zusätzlicher Button, mit dem das Modal geöffnet werden kann.
 excluded_pages: Seiten ausschließen
 excluded_pages_info: Das Modal wird auf den ausgesuchten Seiten nicht ausgegeben.
 start: Start bei (Sekunden)

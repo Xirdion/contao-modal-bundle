@@ -42,23 +42,27 @@ class LoadDataContainerListener
     private function addModalPalette(string $table): void
     {
         // Build the palette for the different tables
-        $palette = '';
+        $size = ('tl_module' === $table ? 'imgSize' : 'size');
+        $palette = <<<PALETTE
+            {text_legend},text,html;{image_legend};
+            {image_legend},singleSRC,$size,fullsize;
+            {link_legend},url,target,linkTitle,titleText;
+            {modal_legend},modal_button,modal_excludedPages,modal_start,modal_stop;
+            {template_legend:hide},customTpl;
+            {protected_legend:hide},protected;
+            {expert_legend:hide},guests,cssID;
+            PALETTE;
+
         switch ($table) {
             case 'tl_content':
-                $palette .= '{type_legend},type,headline;';
+                $palette = '{type_legend},type,headline;' . $palette;
                 break;
             case 'tl_module':
-                $palette .= '{title_legend},name,headline,type;';
+                $palette = '{title_legend},name,headline,type;' . $palette;
                 break;
         }
-        $palette .= '{text_legend},text,html;{image_legend},singleSRC,' . ('tl_module' === $table ? 'imgSize' : 'size') . ',fullsize;{link_legend},url,target,linkTitle,titleText;{modal_legend},modal_excludedPages,modal_start,modal_stop;';
-        switch ($table) {
-            case 'tl_content':
-                $palette .= '{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID;{invisible_legend:hide},invisible,start,stop';
-                break;
-            case 'tl_module':
-                $palette .= '{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID';
-                break;
+        if ('tl_content' === $table) {
+            $palette .= '{invisible_legend:hide},invisible,start,stop';
         }
 
         // Add the new palette to the global data container
@@ -126,6 +130,18 @@ class LoadDataContainerListener
     private function addModalFields(string $table): void
     {
         $label = [
+            $this->translator->trans('button', [], 'SowiesoModalBundle'),
+            $this->translator->trans('button_info', [], 'SowiesoModalBundle'),
+        ];
+        $GLOBALS['TL_DCA'][$table]['fields']['modal_button'] = [
+            'label' => $label,
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => ['type' => 'string', 'length' => 255, 'notnull' => true, 'default' => ''],
+        ];
+
+        $label = [
             $this->translator->trans('excluded_pages', [], 'SowiesoModalBundle'),
             $this->translator->trans('excluded_pages_info', [], 'SowiesoModalBundle'),
         ];
@@ -134,7 +150,7 @@ class LoadDataContainerListener
             'exclude' => true,
             'inputType' => 'pageTree',
             'foreignKey' => 'tl_page.title',
-            'eval' => ['multiple' => true, 'fieldType' => 'checkbox', 'isSortable' => true],
+            'eval' => ['multiple' => true, 'fieldType' => 'checkbox', 'isSortable' => true, 'tl_cass' => 'clr'],
             'sql' => ['type' => 'blob', 'notnull' => false],
             'relation' => ['type' => 'hasMany', 'load' => 'lazy'],
         ];

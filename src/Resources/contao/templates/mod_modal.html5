@@ -6,39 +6,42 @@
 <?php $this->block('content'); ?>
 
 <?php if ($this->showModal): ?>
-<div class="<?= $this->class ?> block modal js-modal" id="modal-<?= $this->modalId ?>">
-    <div class="modal-overlay">
-        <div class="modal-container">
-            <button class="close modal-close js-modal-close" data-modal="modal-<?= $this->modalId ?>">close</button>
-            <div class="inside">
-                <div class="modal-content">
-                    <div class="inside">
-                        <?php if ($this->headline): ?>
-                            <<?= $this->hl ?> class="headline"><?= $this->headline ?></<?= $this->hl ?>>
-                        <?php endif; ?>
-                        <?php if ($this->html): ?>
-                            <?= $this->html ?>
-                        <?php endif; ?>
-                        <?php if ($this->addImage): ?>
-                            <?php $this->insert('image', $this->imageData); ?>
-                        <?php endif; ?>
-                        <?php if ($this->text): ?>
-                            <div class="text-container">
-                                <?= $this->text ?>
+    <?php if($this->modalButton): ?>
+        <button id="modal-button-<?= $this->modalId ?>" class="js-modal-button" data-modal="modal-<?= $this->modalId ?>"></button>
+    <?php endif; ?>
+    <div id="modal-<?= $this->modalId ?>" class="<?= $this->class ?> block modal js-modal" data-start-time="<?= ($this->modalStart * 1000) ?>" data-stop-time="<?= ($this->modalStop * 1000) ?>">
+        <div class="modal-overlay">
+            <div class="modal-container">
+                <button class="close modal-close js-modal-close" data-modal="modal-<?= $this->modalId ?>"></button>
+                <div class="inside">
+                    <div class="modal-content">
+                        <div class="inside">
+                            <?php if ($this->headline): ?>
+                                <<?= $this->hl ?> class="headline headline-main"><?= $this->headline ?></<?= $this->hl ?>>
+                            <?php endif; ?>
+                            <?php if ($this->html): ?>
+                                <?= $this->html ?>
+                            <?php endif; ?>
+                            <?php if ($this->addImage): ?>
+                                <?php $this->insert('image', $this->imageData); ?>
+                            <?php endif; ?>
+                            <?php if ($this->text): ?>
+                                <div class="text-container">
+                                    <?= $this->text ?>
 
-                                <?php if ($this->url): ?>
-                                    <a class="hyperlink_txt" href="<?= $this->url ?>" title="<?= $this->titleText ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif; ?>>
-                                        <?= $this->linkTitle ?>
-                                    </a>
-                                <?php endif;?>
-                            </div>
-                        <?php endif; ?>
+                                    <?php if ($this->url): ?>
+                                        <a class="hyperlink_txt" href="<?= $this->url ?>" title="<?= $this->titleText ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif; ?>>
+                                            <?= $this->linkTitle ?>
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <?php endif; ?>
 
 <?php $this->endblock(); ?>
