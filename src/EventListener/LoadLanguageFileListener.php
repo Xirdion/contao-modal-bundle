@@ -38,7 +38,7 @@ class LoadLanguageFileListener
             return;
         }
 
-        if (false === $this->scopeMatcher->isFrontendRequest($this->request)) {
+        if (true === $this->scopeMatcher->isFrontendRequest($this->request)) {
             return;
         }
 
