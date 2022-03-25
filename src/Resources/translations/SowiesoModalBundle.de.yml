@@ -1,8 +1,20 @@
-button: Button (option)
+sowiesoModal: Modal Text-Bild-Html
+sowiesoModal_info: Es kann ein Modal hinzugefügt werden, welches HTML oder Text und/oder Bild anzeigen kann. Dabei kann die Start- und Endzeit für die Anzeige definiert werden.
+text_legend: Text/HTML/Code
+modal_legend: Modal-Einstellungen
+text: Text
+text_info: Sie können HTML-Tags verwenden. um den Text zu formatieren.
+url: Link-Adresse
+url_info: Geben Sie eine Web-Adresse (http://…), eine E-Mail-Adresse (mailto:…) oder ein Insert-Tag ein.
+titleText: Link-Title
+titleText_info: Der Link-Titel wird als title-Attribut im HTML-Markup eingefügt.
+linkTitle: Link-Text
+linkTitle_info: Der Link-Text wird anstelle der Link-Adresse angezeigt.
+button: Link-Text (Optional)
 button_info: Ein zusätzlicher Button, mit dem das Modal geöffnet werden kann.
 excluded_pages: Seiten ausschließen
 excluded_pages_info: Das Modal wird auf den ausgesuchten Seiten nicht ausgegeben.
 start: Start bei (Sekunden)
-start_info: Das Modal wird X-Sekunden, nachdem die Seite geladen worden ist, angezeigt.
+start_info: Das Modal wird X-Sekunden, nachdem die Seite geladen worden ist, angezeigt. 0 bedeutet, dass es immer angezeigt wird.
 stop: Stop bis (Tagen)
-stop_info: Das Modal wird nach X-Tagen erst wieder angezeigt.
+stop_info: Das Modal wird nach X-Tagen erst wieder angezeigt. 0 bedeutet, dass es sofort angezeigt wird.

@@ -116,7 +116,6 @@ class Builder
         $imageData = $this->getImageData(
             $this->model->__get('singleSRC'),
             $this->model->__get($size),
-            (bool) $this->model->__get('fullsize'),
             $this->model->__get('url'),
         );
         if (null !== $imageData) {
@@ -188,12 +187,11 @@ class Builder
     /**
      * @param string|null                                                $singleSRC
      * @param int|string|array<string, string>|PictureConfiguration|null $size
-     * @param bool                                                       $fullsize
      * @param string                                                     $href
      *
      * @return array<string, mixed>|null
      */
-    private function getImageData(?string $singleSRC, mixed $size, bool $fullsize, string $href): ?array
+    private function getImageData(?string $singleSRC, mixed $size, string $href): ?array
     {
         // Check if there is an image source
         if (!$singleSRC) {
@@ -205,7 +203,6 @@ class Builder
             ->createFigureBuilder()
             ->from($singleSRC)
             ->setSize($size)
-            ->enableLightbox($fullsize)
             ->setLinkHref($href)
             ->buildIfResourceExists()
         ;
@@ -231,7 +228,6 @@ class Builder
             'height' => $orgSize->getHeight(),
             'singleSRC' => $image->getFilePath(),
             'src' => $image->getImageSrc(),
-            'fullsize' => ('_blank' === ($linkAttributes['target'] ?? null)) || $figure->hasLightbox(),
             'href' => $href,
             'linkTitle' => (\array_key_exists('title', $linkAttributes) ? $linkAttributes['title'] : $metadata->getTitle()),
         ];

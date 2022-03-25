@@ -14,3 +14,11 @@ services:
     tags:
       - { name: contao.callback, table: tl_content, target: config.onload, method: onLoadDataContainer }
       - { name: contao.callback, table: tl_module, target: config.onload, method: onLoadDataContainer }
+
+  Sowieso\ModalBundle\EventListener\LoadLanguageFileListener:
+    arguments:
+      - '@request_stack'
+      - '@contao.routing.scope_matcher'
+      - '@translator'
+    tags:
+      - { name: contao.hook, hook: loadLanguageFile, method: onLoadLanguageFile }

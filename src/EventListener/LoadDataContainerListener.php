@@ -45,7 +45,7 @@ class LoadDataContainerListener
         $size = ('tl_module' === $table ? 'imgSize' : 'size');
         $palette = <<<PALETTE
             {text_legend},text,html;{image_legend};
-            {image_legend},singleSRC,$size,fullsize;
+            {image_legend},singleSRC,$size;
             {link_legend},url,target,linkTitle,titleText;
             {modal_legend},modal_button,modal_excludedPages,modal_start,modal_stop;
             {template_legend:hide},customTpl;
@@ -80,7 +80,6 @@ class LoadDataContainerListener
 
         if (false === isset($GLOBALS['TL_DCA'][$table]['fields']['text'])) {
             $GLOBALS['TL_DCA'][$table]['fields']['text'] = [
-                'label' => &$GLOBALS['TL_LANG']['tl_content']['text'],
                 'exclude' => true,
                 'inputType' => 'textarea',
                 'eval' => ['rte' => 'tinyMCE', 'helpwizard' => true],
@@ -101,7 +100,6 @@ class LoadDataContainerListener
 
         if (false === isset($GLOBALS['TL_DCA'][$table]['fields']['titleText'])) {
             $GLOBALS['TL_DCA'][$table]['fields']['titleText'] = [
-                'label' => &$GLOBALS['TL_LANG']['tl_content']['titleText'],
                 'exclude' => true,
                 'inputType' => 'text',
                 'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
@@ -111,7 +109,6 @@ class LoadDataContainerListener
 
         if (false === isset($GLOBALS['TL_DCA'][$table]['fields']['linkTitle'])) {
             $GLOBALS['TL_DCA'][$table]['fields']['linkTitle'] = [
-                'label' => &$GLOBALS['TL_LANG']['tl_content']['linkTitle'],
                 'exclude' => true,
                 'inputType' => 'text',
                 'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
