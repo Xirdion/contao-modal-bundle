@@ -15,6 +15,20 @@ services:
       - { name: contao.callback, table: tl_content, target: config.onload, method: onLoadDataContainer }
       - { name: contao.callback, table: tl_module, target: config.onload, method: onLoadDataContainer }
 
+  Sowieso\ModalBundle\EventListener\DataContainer\ContentTypeOptionsCallback:
+    arguments:
+      - '@translator'
+    tags:
+      - { name: contao.callback, table: tl_content, target: fields.modal_content_type.options, method: onGetContentTypeOptions }
+      - { name: contao.callback, table: tl_module, target: fields.modal_content_type.options, method: onGetContentTypeOptions }
+
+  Sowieso\ModalBundle\EventListener\DataContainer\OpeningTypeOptionsCallback:
+    arguments:
+      - '@translator'
+    tags:
+      - { name: contao.callback, table: tl_content, target: fields.modal_opening_type.options, method: onGetOpeningTypeOptions }
+      - { name: contao.callback, table: tl_module, target: fields.modal_opening_type.options, method: onGetOpeningTypeOptions }
+
   Sowieso\ModalBundle\EventListener\LoadLanguageFileListener:
     arguments:
       - '@request_stack'

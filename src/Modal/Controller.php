@@ -30,6 +30,7 @@ class Controller
         // Set no modal as default
         $templateData = $template->getData();
         $templateData['showModal'] = false;
+        $templateData['class'] = str_replace('_sowiesoModal', '_modal', $templateData['class']);
 
         $modalData = $this->modal
             ->setRequest($request)
@@ -47,6 +48,21 @@ class Controller
         // Add the modal data to the template
         $templateData = array_merge($templateData, $modalData);
         $templateData['showModal'] = true;
+
+        $contentType = $model->__get('modal_content_type');
+        $templateData['contentClass'] = match ($contentType) {
+            'modal_image' => 'ce_image',
+            'modal_html' => 'ce_html',
+            default => 'ce_text',
+        };
+
+        $openingType = $model->__get('modal_opening_type');
+        $templateData['openingType'] = match ($openingType) {
+            'modal_button' => 'button',
+            'modal_scroll' => 'scroll',
+            default => 'time',
+        };
+
         $templateData['modalButton'] = $model->__get('modal_button');
         $templateData['modalStart'] = (int) $model->__get('modal_start');
         $templateData['modalStop'] = (int) $model->__get('modal_stop');
