@@ -30,6 +30,7 @@ class Controller
         // Set no modal as default
         $templateData = $template->getData();
         $templateData['showModal'] = false;
+        $templateData['class'] = str_replace('_sowiesoModal', '_modal', $templateData['class']);
 
         $modalData = $this->modal
             ->setRequest($request)
