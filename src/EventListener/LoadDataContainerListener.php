@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Sowieso\ModalBundle\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
+use Sowieso\ModalBundle\EventListener\DataContainer\ContentTypeOptionsCallback;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsHook('loadDataContainer', 'onLoadDataContainer')]
@@ -43,9 +44,8 @@ class LoadDataContainerListener
     {
         // Build the palette for the different tables
         $size = ('tl_module' === $table ? 'imgSize' : 'size');
-        $palette = <<<PALETTE
-            {text_legend},text,html;{image_legend};
-            {image_legend},singleSRC,$size;
+        $palette = <<<'PALETTE'
+            {content_type_legend},modal_content_type;
             {link_legend},url,target,linkTitle,titleText;
             {modal_legend},modal_button,modal_excludedPages,modal_start,modal_stop;
             {template_legend:hide},customTpl;
@@ -67,6 +67,14 @@ class LoadDataContainerListener
 
         // Add the new palette to the global data container
         $GLOBALS['TL_DCA'][$table]['palettes']['sowiesoModal'] = $palette;
+
+        // Add additional selector
+        $GLOBALS['TL_DCA'][$table]['palettes']['__selector__'][] = 'modal_content_type';
+
+        // Add additional sub palettes
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_text'] = '{text_legend},text,{image_legend},singleSRC,' . $size;
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_image'] = '{image_legend},singleSRC,' . $size;
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_html'] = '{text_legend},html';
     }
 
     /**
@@ -126,6 +134,19 @@ class LoadDataContainerListener
      */
     private function addModalFields(string $table): void
     {
+        $label = [
+            $this->translator->trans('modal_content_type', [], 'SowiesoModalBundle'),
+            $this->translator->trans('modal_content_type_info', [], 'SowiesoModalBundle'),
+        ];
+        $GLOBALS['TL_DCA'][$table]['fields']['modal_content_type'] = [
+            'label' => $label,
+            'exclude' => true,
+            'inputType' => 'select',
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50'],
+            'options_callback' => [ContentTypeOptionsCallback::class, 'onGetContentTypeOptions'],
+            'sql' => ['type' => 'string', 'length' => 12, 'notnull' => true, 'default' => 'modal_text'],
+        ];
+
         $label = [
             $this->translator->trans('button', [], 'SowiesoModalBundle'),
             $this->translator->trans('button_info', [], 'SowiesoModalBundle'),

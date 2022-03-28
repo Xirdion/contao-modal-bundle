@@ -105,10 +105,12 @@ class LoadLanguageFileListener
 
         switch ($table) {
             case 'tl_content':
+                $GLOBALS['TL_LANG'][$table]['content_type_legend'] = $this->translator->trans('content_type_legend', [], $this->domain);
                 $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
                 break;
             case 'tl_module':
                 // Legends
+                $GLOBALS['TL_LANG'][$table]['content_type_legend'] = $this->translator->trans('content_type_legend', [], $this->domain);
                 $GLOBALS['TL_LANG'][$table]['text_legend'] = $this->translator->trans('text_legend', [], $this->domain);
                 $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
 

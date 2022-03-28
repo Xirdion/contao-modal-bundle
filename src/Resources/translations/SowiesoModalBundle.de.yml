@@ -1,5 +1,14 @@
+# FMD
 sowiesoModal: Modal Text-Bild-Html
 sowiesoModal_info: Es kann ein Modal hinzugefügt werden, welches HTML oder Text und/oder Bild anzeigen kann. Dabei kann die Start- und Endzeit für die Anzeige definiert werden.
+
+# DCA
+content_type_legend: Einstellungen zum Inhaltstyp
+modal_content_type: Inhaltstyp
+modal_content_type_info: Wählen Sie einen geeigneten Inhaltstyp für Ihr Modal aus.
+modal_content_type.text: Text + Bild
+modal_content_type.image: Bild
+modal_content_type.html: HTML
 text_legend: Text/HTML/Code
 modal_legend: Modal-Einstellungen
 text: Text
