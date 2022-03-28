@@ -6,10 +6,10 @@
 <?php $this->block('content'); ?>
 
 <?php if ($this->showModal): ?>
-    <?php if ($this->modalButton): ?>
+    <?php if ('button' === $this->openingType && $this->modalButton): ?>
         <button id="modal-button-<?= $this->modalId ?>" class="js-modal-open modal-opener" data-modal="modal-<?= $this->modalId ?>"><?= $this->modalButton ?></button>
     <?php endif; ?>
-    <div id="modal-<?= $this->modalId ?>" class="<?= $this->class ?> block modal js-modal" data-start-time="<?= ($this->modalStart * 1000) ?>" data-stop-time="<?= ($this->modalStop * 1000) ?>">
+    <div id="modal-<?= $this->modalId ?>" class="<?= $this->class ?> block modal hide js-modal <?php if ('scroll' === $this->openingType): ?>js-modal-scroll<?php endif; ?><?php if ('time' === $this->openingType): ?>js-modal-time<?php endif; ?>" <?php if ('time' === $this->openingType): ?>data-start-time="<?= ($this->modalStart * 1000) ?>" data-stop-time="<?= ($this->modalStop * 1000) ?>"<?php endif; ?>>
         <div class="modal-overlay">
             <div class="modal-container">
                 <button class="close modal-close js-modal-close" data-modal="modal-<?= $this->modalId ?>"></button>

@@ -20,22 +20,39 @@ const modal = function () {
     });
 
     // Automatically open the modals, if these have a start-time
-    const modals = document.getElementsByClassName('js-modal');
-    for (let i = 0; i < modals.length; i++) {
-        const startTime = parseInt(modals[i].dataset.startTime);
-        if (startTime) {
-            startModal(modals[i], startTime);
+    const timeModals = document.querySelectorAll('.js-modal-time');
+    timeModals.forEach((m) => {
+        const start = parseInt(m.dataset.startTime);
+        console.log(start);
+        if (start) {
+            startModal(m, start);
         }
-    }
+    });
 
     // Show the modal after a specific amount of time
     function startModal(modal, startTime) {
-        setTimeout(function () {
+        setTimeout(() => {
             showModal(modal, true);
         }, startTime);
     }
 
-    function showModal(modal, checkSession) {
+    // Create an intersection observer to show modals with scroll option
+    const modalObserver = new IntersectionObserver(entries => {
+        entries.forEach(modal => {
+            if (modal.isIntersecting) {
+                showModal(modal.target);
+                modalObserver.unobserve(modal.target);
+            }
+        });
+    });
+
+    // Add all modals with scroll option to the observer
+    const scrollModals = document.querySelectorAll('.js-modal-scroll');
+    scrollModals.forEach((m) => {
+        modalObserver.observe(m);
+    });
+
+    function showModal(modal, checkSession = false) {
         const storageTime = modal.dataset.stopTime;
         const currentTime = new Date().getTime();
         let showModal = !checkSession;

@@ -15,7 +15,6 @@ namespace Sowieso\ModalBundle\Modal;
 use Contao\Model;
 use Contao\PageModel;
 use Contao\Template;
-use Sowieso\ModalBundle\EventListener\DataContainer\ContentTypeOptionsCallback;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -51,8 +50,18 @@ class Controller
         $templateData['showModal'] = true;
 
         $contentType = $model->__get('modal_content_type');
-        $contentClass = ContentTypeOptionsCallback::getContentClass($contentType);
-        $templateData['contentClass'] = $contentClass;
+        $templateData['contentClass'] = match ($contentType) {
+            'modal_image' => 'ce_image',
+            'modal_html' => 'ce_html',
+            default => 'ce_text',
+        };
+
+        $openingType = $model->__get('modal_opening_type');
+        $templateData['openingType'] = match ($openingType) {
+            'modal_button' => 'button',
+            'modal_scroll' => 'scroll',
+            default => 'time',
+        };
 
         $templateData['modalButton'] = $model->__get('modal_button');
         $templateData['modalStart'] = (int) $model->__get('modal_start');

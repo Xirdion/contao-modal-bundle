@@ -9,6 +9,11 @@ modal_content_type_info: Wählen Sie einen geeigneten Inhaltstyp für Ihr Modal 
 modal_content_type.text: Text + Bild
 modal_content_type.image: Bild
 modal_content_type.html: HTML
+modal_opening_type: Öffnungstyp
+modal_opening_type_info: Wählen Sie aus, wie das Modal geöffnet werden soll.
+modal_opening_type.time: Zeit
+modal_opening_type.button: Button
+modal_opening_type.scroll: Scrollposition
 text_legend: Text/HTML/Code
 modal_legend: Modal-Einstellungen
 text: Text

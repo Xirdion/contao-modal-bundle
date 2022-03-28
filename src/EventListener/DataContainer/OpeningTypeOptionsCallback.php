@@ -18,7 +18,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsCallback('tl_content', 'fields.modal_content_type.options', 'onGetContentTypeOptions')]
 #[AsCallback('tl_module', 'fields.modal_content_type.options', 'onGetContentTypeOptions')]
-class ContentTypeOptionsCallback
+class OpeningTypeOptionsCallback
 {
     public function __construct(
         private TranslatorInterface $translator,
@@ -30,23 +30,14 @@ class ContentTypeOptionsCallback
      *
      * @return array<string, string>
      */
-    public function onGetContentTypeOptions(?DataContainer $dataContainer): array
+    public function onGetOpeningTypeOptions(?DataContainer $dataContainer): array
     {
         $domain = 'SowiesoModalBundle';
 
         return [
-            'modal_text' => $this->translator->trans('modal_content_type.text', [], $domain),
-            'modal_image' => $this->translator->trans('modal_content_type.image', [], $domain),
-            'modal_html' => $this->translator->trans('modal_content_type.html', [], $domain),
+            'modal_time' => $this->translator->trans('modal_opening_type.time', [], $domain),
+            'modal_button' => $this->translator->trans('modal_opening_type.button', [], $domain),
+            'modal_scroll' => $this->translator->trans('modal_opening_type.scroll', [], $domain),
         ];
-    }
-
-    public static function getContentClass(string $type): string
-    {
-        return match ($type) {
-            'modal_image' => 'ce_image',
-            'modal_html' => 'ce_html',
-            default => 'ce_text',
-        };
     }
 }

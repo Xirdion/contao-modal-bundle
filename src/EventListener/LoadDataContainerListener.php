@@ -14,6 +14,7 @@ namespace Sowieso\ModalBundle\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Sowieso\ModalBundle\EventListener\DataContainer\ContentTypeOptionsCallback;
+use Sowieso\ModalBundle\EventListener\DataContainer\OpeningTypeOptionsCallback;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsHook('loadDataContainer', 'onLoadDataContainer')]
@@ -47,7 +48,7 @@ class LoadDataContainerListener
         $palette = <<<'PALETTE'
             {content_type_legend},modal_content_type;
             {link_legend},url,target,linkTitle,titleText;
-            {modal_legend},modal_button,modal_excludedPages,modal_start,modal_stop;
+            {modal_legend},modal_excludedPages,modal_opening_type;
             {template_legend:hide},customTpl;
             {protected_legend:hide},protected;
             {expert_legend:hide},guests,cssID;
@@ -70,11 +71,18 @@ class LoadDataContainerListener
 
         // Add additional selector
         $GLOBALS['TL_DCA'][$table]['palettes']['__selector__'][] = 'modal_content_type';
+        $GLOBALS['TL_DCA'][$table]['palettes']['__selector__'][] = 'modal_opening_type';
 
         // Add additional sub palettes
+        // content type
         $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_text'] = '{text_legend},text,{image_legend},singleSRC,' . $size;
         $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_image'] = '{image_legend},singleSRC,' . $size;
         $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_html'] = '{text_legend},html';
+
+        // opening type
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_time'] = 'modal_start,modal_stop';
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_button'] = 'modal_button';
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_scroll'] = '';
     }
 
     /**
@@ -148,18 +156,6 @@ class LoadDataContainerListener
         ];
 
         $label = [
-            $this->translator->trans('button', [], 'SowiesoModalBundle'),
-            $this->translator->trans('button_info', [], 'SowiesoModalBundle'),
-        ];
-        $GLOBALS['TL_DCA'][$table]['fields']['modal_button'] = [
-            'label' => $label,
-            'exclude' => true,
-            'inputType' => 'text',
-            'eval' => ['tl_class' => 'w50'],
-            'sql' => ['type' => 'string', 'length' => 255, 'notnull' => true, 'default' => ''],
-        ];
-
-        $label = [
             $this->translator->trans('excluded_pages', [], 'SowiesoModalBundle'),
             $this->translator->trans('excluded_pages_info', [], 'SowiesoModalBundle'),
         ];
@@ -171,6 +167,31 @@ class LoadDataContainerListener
             'eval' => ['multiple' => true, 'fieldType' => 'checkbox', 'isSortable' => true, 'tl_class' => 'clr'],
             'sql' => ['type' => 'blob', 'notnull' => false],
             'relation' => ['type' => 'hasMany', 'load' => 'lazy'],
+        ];
+
+        $label = [
+            $this->translator->trans('modal_opening_type', [], 'SowiesoModalBundle'),
+            $this->translator->trans('modal_opening_type_info', [], 'SowiesoModalBundle'),
+        ];
+        $GLOBALS['TL_DCA'][$table]['fields']['modal_opening_type'] = [
+            'label' => $label,
+            'exclude' => true,
+            'inputType' => 'select',
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'w50'],
+            'options_callback' => [OpeningTypeOptionsCallback::class, 'onGetOpeningTypeOptions'],
+            'sql' => ['type' => 'string', 'length' => 12, 'notnull' => true, 'default' => 'modal_time'],
+        ];
+
+        $label = [
+            $this->translator->trans('button', [], 'SowiesoModalBundle'),
+            $this->translator->trans('button_info', [], 'SowiesoModalBundle'),
+        ];
+        $GLOBALS['TL_DCA'][$table]['fields']['modal_button'] = [
+            'label' => $label,
+            'exclude' => true,
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => ['type' => 'string', 'length' => 255, 'notnull' => true, 'default' => ''],
         ];
 
         $label = [
