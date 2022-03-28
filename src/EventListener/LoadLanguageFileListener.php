@@ -12,8 +12,11 @@ declare(strict_types=1);
 
 namespace Sowieso\ModalBundle\EventListener;
 
+use Contao\ContentModel;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\CoreBundle\Routing\ScopeMatcher;
+use Contao\Model;
+use Contao\ModuleModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -42,40 +45,87 @@ class LoadLanguageFileListener
             return;
         }
 
-        if ('modules' === $name) {
-            $GLOBALS['TL_LANG']['FMD']['sowiesoModal'] = [
-                $this->translator->trans('sowiesoModal', [], $this->domain),
-                $this->translator->trans('sowiesoModal_info', [], $this->domain),
-            ];
+        switch ($name) {
+            case 'modules':
+                // Add general name of the content element type / module type
+                $this->addModuleTranslation();
+                break;
+            case 'tl_content':
+            case 'tl_module':
+                // Add additional translations for the DCA fields
+                $this->addDcaTranslations($name);
+                break;
+        }
+    }
 
+    private function addModuleTranslation(): void
+    {
+        $GLOBALS['TL_LANG']['FMD']['sowiesoModal'] = [
+            $this->translator->trans('sowiesoModal', [], $this->domain),
+            $this->translator->trans('sowiesoModal_info', [], $this->domain),
+        ];
+    }
+
+    /**
+     * Add some additional translations for the new modal to tl_content and tl_module.
+     *
+     * @param string $table
+     *
+     * @return void
+     */
+    private function addDcaTranslations(string $table): void
+    {
+        if (null === $this->request) {
             return;
         }
 
-        // Get act and id from request and check if it is the sowiesoModal type
+        // Check request mode: it must be the edit mode
+        if ('edit' !== $this->request->query->get('act')) {
+            return;
+        }
 
-        switch ($name) {
+        // Try to load the model and check the type
+        $id = (int) $this->request->query->get('id');
+
+        /** @var Model $modelClass */
+        $modelClass = Model::getClassFromTable($table);
+
+        /** @var ContentModel|ModuleModel|null $model */
+        $model = $modelClass::findByPk($id);
+
+        // Check if the model could get loaded
+        if (null === $model) {
+            return;
+        }
+
+        // Check the type of the model
+        if ('sowiesoModal' !== $model->type) {
+            return;
+        }
+
+        switch ($table) {
             case 'tl_content':
-                $GLOBALS['TL_LANG'][$name]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
+                $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
                 break;
             case 'tl_module':
                 // Legends
-                $GLOBALS['TL_LANG'][$name]['text_legend'] = $this->translator->trans('text_legend', [], $this->domain);
-                $GLOBALS['TL_LANG'][$name]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
+                $GLOBALS['TL_LANG'][$table]['text_legend'] = $this->translator->trans('text_legend', [], $this->domain);
+                $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
 
                 // Fields
-                $GLOBALS['TL_LANG'][$name]['text'] = [
+                $GLOBALS['TL_LANG'][$table]['text'] = [
                     $this->translator->trans('text', [], $this->domain),
                     $this->translator->trans('text_info', [], $this->domain),
                 ];
-                $GLOBALS['TL_LANG'][$name]['url'] = [
+                $GLOBALS['TL_LANG'][$table]['url'] = [
                     $this->translator->trans('url', [], $this->domain),
                     $this->translator->trans('url_info', [], $this->domain),
                 ];
-                $GLOBALS['TL_LANG'][$name]['titleText'] = [
+                $GLOBALS['TL_LANG'][$table]['titleText'] = [
                     $this->translator->trans('titleText', [], $this->domain),
                     $this->translator->trans('titleText_info', [], $this->domain),
                 ];
-                $GLOBALS['TL_LANG'][$name]['linkTitle'] = [
+                $GLOBALS['TL_LANG'][$table]['linkTitle'] = [
                     $this->translator->trans('linkTitle', [], $this->domain),
                     $this->translator->trans('linkTitle_info', [], $this->domain),
                 ];
