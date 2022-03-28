@@ -27,7 +27,7 @@ class ContentTypeOptionsCallback
     /**
      * @param DataContainer|null $dataContainer
      *
-     * @return array
+     * @return array<string, string>
      */
     public function onGetContentTypeOptions(?DataContainer $dataContainer): array
     {
@@ -38,5 +38,14 @@ class ContentTypeOptionsCallback
             'modal_image' => $this->translator->trans('modal_content_type.image', [], $domain),
             'modal_html' => $this->translator->trans('modal_content_type.html', [], $domain),
         ];
+    }
+
+    public static function getContentClass(string $type): string
+    {
+        return match ($type) {
+            'modal_image' => 'ce_image',
+            'modal_html' => 'ce_html',
+            default => 'ce_text',
+        };
     }
 }

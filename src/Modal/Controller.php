@@ -15,6 +15,7 @@ namespace Sowieso\ModalBundle\Modal;
 use Contao\Model;
 use Contao\PageModel;
 use Contao\Template;
+use Sowieso\ModalBundle\EventListener\DataContainer\ContentTypeOptionsCallback;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -48,6 +49,11 @@ class Controller
         // Add the modal data to the template
         $templateData = array_merge($templateData, $modalData);
         $templateData['showModal'] = true;
+
+        $contentType = $model->__get('modal_content_type');
+        $contentClass = ContentTypeOptionsCallback::getContentClass($contentType);
+        $templateData['contentClass'] = $contentClass;
+
         $templateData['modalButton'] = $model->__get('modal_button');
         $templateData['modalStart'] = (int) $model->__get('modal_start');
         $templateData['modalStop'] = (int) $model->__get('modal_stop');
