@@ -15,25 +15,23 @@
                 <button class="close modal-close js-modal-close" data-modal="modal-<?= $this->modalId ?>"></button>
                 <div class="inside">
                     <div id="<?= $this->contentId ?>" class="<?= $this->contentClass ?> modal-content">
-                        <div class="inside">
-                            <?php if ($this->headline): ?>
-                            <<?= $this->hl ?> id="<?= $this->headlineId ?>" class="headline"><?= $this->headline ?></<?= $this->hl ?>>
-                            <?php endif; ?>
-                            <?php if ($this->html): ?>
-                                <?= $this->html ?>
-                            <?php endif; ?>
-                            <?php if ($this->addImage): ?>
-                                <?php $this->insert('image', $this->imageData); ?>
-                            <?php endif; ?>
-                            <?php if ($this->text): ?>
-                                <?= $this->text ?>
-                            <?php endif; ?>
-                            <?php if ($this->url): ?>
-                                <a class="hyperlink_txt" href="<?= $this->url ?>" title="<?= $this->titleText ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif; ?>>
-                                    <?= $this->linkTitle ?>
-                                </a>
-                            <?php endif; ?>
-                        </div>
+                        <?php if ($this->headline): ?>
+                        <<?= $this->hl ?> id="<?= $this->headlineId ?>" class="headline"><?= $this->headline ?></<?= $this->hl ?>>
+                        <?php endif; ?>
+                        <?php if ($this->html): ?>
+                            <?= $this->html ?>
+                        <?php endif; ?>
+                        <?php if ($this->addImage): ?>
+                            <?php $this->insert('image', $this->imageData); ?>
+                        <?php endif; ?>
+                        <?php if ($this->text): ?>
+                            <?= $this->text ?>
+                        <?php endif; ?>
+                        <?php if ($this->url): ?>
+                            <a class="hyperlink_txt" href="<?= $this->url ?>" title="<?= $this->titleText ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif; ?>>
+                                <?= $this->linkTitle ?>
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

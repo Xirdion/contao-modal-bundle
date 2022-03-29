@@ -16,7 +16,6 @@ use Contao\CoreBundle\File\Metadata;
 use Contao\CoreBundle\Image\Studio\Studio;
 use Contao\CoreBundle\InsertTag\InsertTagParser;
 use Contao\CoreBundle\Routing\ScopeMatcher;
-use Contao\Image\PictureConfiguration;
 use Contao\Model;
 use Contao\PageModel;
 use Contao\StringUtil;
@@ -117,7 +116,8 @@ class Builder
         };
 
         // Link data
-        $modalData['url'] = $this->model->__get('url');
+        // If a single image is the only content of the modal the extra link should not get generated
+        $modalData['url'] = ('modal_image' !== $contentType ? $this->model->__get('url') : '');
         $modalData['target'] = $this->model->__get('target');
         $modalData['linkTitle'] = $this->model->__get('linkTitle') ?: $this->model->__get('url');
         $modalData['titleText'] = $this->model->__get('titleText');
@@ -199,6 +199,9 @@ class Builder
         $url = StringUtil::ampersand($url);
         $url = $this->tagParser->replace($url);
 
+        // Set url to an empty string if it is "./" as this indicates the start page
+        $url = './' === $url ? '' : $url;
+
         return $page->getFrontendUrl() === $url;
     }
 
@@ -241,13 +244,7 @@ class Builder
 
         // Add specific image content variables
         $modalData['contentClass'] = 'ce_image';
-        $table = $this->model::getTable();
-        $size = ('tl_module' === $table ? 'imgSize' : 'size');
-        $imageData = $this->getImageData(
-            $this->model->__get('singleSRC'),
-            $this->model->__get($size),
-            $this->model->__get('url'),
-        );
+        $imageData = $this->getImageData();
         if (null !== $imageData) {
             $modalData['addImage'] = true;
             $modalData['imageData'] = $imageData;
@@ -288,25 +285,31 @@ class Builder
     }
 
     /**
-     * @param string|null                                                $singleSRC
-     * @param int|string|array<string, string>|PictureConfiguration|null $size
-     * @param string                                                     $href
-     *
      * @return array<string, mixed>|null
      */
-    private function getImageData(?string $singleSRC, mixed $size, string $href): ?array
+    private function getImageData(): ?array
     {
         // Check if there is an image source
+        $singleSRC = $this->model->__get('singleSRC');
         if (!$singleSRC) {
             return null;
         }
+
+        $table = $this->model::getTable();
+        $size = $this->model->__get('tl_module' === $table ? 'imgSize' : 'size');
+
+        $metadata = new Metadata([
+            Metadata::VALUE_ALT => $this->model->__get('linkTitle') ?? '',
+            Metadata::VALUE_TITLE => $this->model->__get('titleText') ?? '',
+            Metadata::VALUE_URL => $this->tagParser->replaceInline($this->model->__get('url') ?? ''),
+        ]);
 
         // Try to build the image resource
         $figure = $this->studio
             ->createFigureBuilder()
             ->from($singleSRC)
             ->setSize($size)
-            ->setLinkHref($href)
+            ->setMetadata($metadata)
             ->buildIfResourceExists()
         ;
 
