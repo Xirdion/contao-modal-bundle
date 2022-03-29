@@ -20,7 +20,7 @@ use Sowieso\ModalBundle\Modal\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsFrontendModule('sowiesoModal', 'application', 'mod_modal')]
+#[AsFrontendModule('sowiesoModal', 'application', 'modal')]
 class ModalController extends AbstractFrontendModuleController
 {
     public function __construct(

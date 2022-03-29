@@ -6,18 +6,18 @@
 <?php $this->block('content'); ?>
 
 <?php if ($this->showModal): ?>
-    <?php if ('button' === $this->openingType && $this->modalButton): ?>
+    <?php if ($this->modalButton): ?>
         <button id="modal-button-<?= $this->modalId ?>" class="js-modal-open modal-opener" data-modal="modal-<?= $this->modalId ?>"><?= $this->modalButton ?></button>
     <?php endif; ?>
-    <div id="modal-<?= $this->modalId ?>" class="<?= $this->class ?> block modal hide js-modal <?php if ('scroll' === $this->openingType): ?>js-modal-scroll<?php endif; ?><?php if ('time' === $this->openingType): ?>js-modal-time<?php endif; ?>" <?php if ('time' === $this->openingType): ?>data-start-time="<?= ($this->modalStart * 1000) ?>" data-stop-time="<?= ($this->modalStop * 1000) ?>"<?php endif; ?>>
+    <dialog id="modal-<?= $this->modalId ?>" class="<?= $this->modalClass ?> hide js-modal" <?= $this->attributes ?>>
         <div class="modal-overlay">
             <div class="modal-container">
                 <button class="close modal-close js-modal-close" data-modal="modal-<?= $this->modalId ?>"></button>
                 <div class="inside">
-                    <div class="modal-content <?= $this->contentClass ?>">
+                    <div id="<?= $this->contentId ?>" class="<?= $this->contentClass ?> modal-content">
                         <div class="inside">
                             <?php if ($this->headline): ?>
-                                <<?= $this->hl ?> class="headline headline-main"><?= $this->headline ?></<?= $this->hl ?>>
+                            <<?= $this->hl ?> id="<?= $this->headlineId ?>" class="headline"><?= $this->headline ?></<?= $this->hl ?>>
                             <?php endif; ?>
                             <?php if ($this->html): ?>
                                 <?= $this->html ?>
@@ -32,13 +32,13 @@
                                 <a class="hyperlink_txt" href="<?= $this->url ?>" title="<?= $this->titleText ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif; ?>>
                                     <?= $this->linkTitle ?>
                                 </a>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </dialog>
 <?php endif; ?>
 
 <?php $this->endblock(); ?>

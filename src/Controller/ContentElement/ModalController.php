@@ -20,7 +20,7 @@ use Sowieso\ModalBundle\Modal\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-#[AsContentElement('sowiesoModal', 'links', 'ce_modal')]
+#[AsContentElement('sowiesoModal', 'links', 'modal')]
 class ModalController extends AbstractContentElementController
 {
     public function __construct(

@@ -46,26 +46,9 @@ class Controller
         }
 
         // Add the modal data to the template
-        $templateData = array_merge($templateData, $modalData);
         $templateData['showModal'] = true;
-
-        $contentType = $model->__get('modal_content_type');
-        $templateData['contentClass'] = match ($contentType) {
-            'modal_image' => 'ce_image',
-            'modal_html' => 'ce_html',
-            default => 'ce_text',
-        };
-
-        $openingType = $model->__get('modal_opening_type');
-        $templateData['openingType'] = match ($openingType) {
-            'modal_button' => 'button',
-            'modal_scroll' => 'scroll',
-            default => 'time',
-        };
-
-        $templateData['modalButton'] = $model->__get('modal_button');
-        $templateData['modalStart'] = (int) $model->__get('modal_start');
-        $templateData['modalStop'] = (int) $model->__get('modal_stop');
+        $templateData = array_merge($templateData, $modalData);
+        $templateData['class'] .= ' modal-element';
         $template->setData($templateData);
 
         $GLOBALS['TL_CSS']['modal'] = 'bundles/contaomodal/css/modal.min.css';
