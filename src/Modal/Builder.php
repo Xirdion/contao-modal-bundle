@@ -325,6 +325,8 @@ class Builder
 
         // Collect the image data
         return [
+            'id' => $this->model->id,
+            'type' => 'modal_image',
             'picture' => [
                 'img' => $image->getImg(),
                 'sources' => $image->getSources(),
