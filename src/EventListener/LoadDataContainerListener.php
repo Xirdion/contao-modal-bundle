@@ -82,7 +82,7 @@ class LoadDataContainerListener
         // opening type
         $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_time'] = 'modal_start,modal_stop';
         $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_button'] = 'modal_button';
-        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_scroll'] = '';
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_scroll'] = 'modal_stop';
     }
 
     /**

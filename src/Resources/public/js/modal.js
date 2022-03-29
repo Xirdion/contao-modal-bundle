@@ -1,5 +1,23 @@
 const modal = function () {
     const activeModals = [];
+    // Add key down listener to close current active modal with ESC
+    document.addEventListener('keydown', (event) => {
+        // Check the pressed key
+        if ('Escape' !== event.key) {
+            return;
+        }
+
+        // Check if there are any active modals
+        if (0 === activeModals.length) {
+            return;
+        }
+
+        // Try to hide the last added modal
+        const modal = document.getElementById(activeModals[activeModals.length - 1]);
+        hideModal(modal);
+    });
+
+    // Add click events to possible modal close buttons and modal open buttons
     document.addEventListener('click', (event) => {
         const element = event.target;
         if (element) {
@@ -22,11 +40,7 @@ const modal = function () {
     // Automatically open the modals, if these have a start-time
     const timeModals = document.querySelectorAll('.js-modal-time');
     timeModals.forEach((m) => {
-        const start = parseInt(m.dataset.startTime);
-        console.log(start);
-        if (start) {
-            startModal(m, start);
-        }
+        startModal(m, parseInt(m.dataset.startTime));
     });
 
     // Show the modal after a specific amount of time
@@ -38,10 +52,11 @@ const modal = function () {
 
     // Create an intersection observer to show modals with scroll option
     const modalObserver = new IntersectionObserver(entries => {
-        entries.forEach(modal => {
-            if (modal.isIntersecting) {
-                showModal(modal.target);
-                modalObserver.unobserve(modal.target);
+        entries.forEach(modalElement => {
+            if (modalElement.isIntersecting) {
+                const modal = modalElement.target.querySelector('.js-modal')
+                showModal(modal, true);
+                modalObserver.unobserve(modal);
             }
         });
     });
@@ -49,22 +64,22 @@ const modal = function () {
     // Add all modals with scroll option to the observer
     const scrollModals = document.querySelectorAll('.js-modal-scroll');
     scrollModals.forEach((m) => {
-        modalObserver.observe(m);
+        modalObserver.observe(m.closest('.modal-element'));
     });
 
     function showModal(modal, checkSession = false) {
-        const storageTime = modal.dataset.stopTime;
+        const storageTime = parseInt(modal.dataset.stopTime);
         const currentTime = new Date().getTime();
-        let showModal = !checkSession;
+        let showModal = !(checkSession && 0 !== storageTime);
 
-        if (checkSession) {
+        if (false === showModal) {
             const modalName = 'Modal' + modal.id;
             const maxStorageTime = new Date();
-            maxStorageTime.setDate(maxStorageTime.getDate() + parseInt(storageTime));
+            maxStorageTime.setDate(maxStorageTime.getDate() + storageTime);
 
             // use localStorage when storage time is defined, otherwise sessionStorage
-            const storage = storageTime ? window.localStorage : window.sessionStorage;
-            const value = storageTime ? maxStorageTime.getTime() : currentTime;
+            const storage = window.localStorage;
+            const value = maxStorageTime.getTime();
             const item = storage.getItem(modalName);
 
             // Check if modal should really be shown
@@ -75,10 +90,11 @@ const modal = function () {
             }
         }
 
-        if (showModal) {
+        if (showModal && !modal.hasAttribute('open')) {
             activeModals.push(modal.id);
             modal.classList.add('visible');
             modal.classList.remove('hide');
+            modal.showModal();
         }
     }
 
@@ -92,6 +108,7 @@ const modal = function () {
 
         setTimeout(function () {
             modal.classList.remove('visible');
+            modal.close();
         }, 300);
     }
 };

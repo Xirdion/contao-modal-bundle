@@ -45,9 +45,12 @@
 
 .modal {
     color: var(--modal-font-color);
+    border: none;
+    background: transparent;
 }
 
 .modal-overlay {
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;

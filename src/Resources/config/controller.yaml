@@ -6,10 +6,10 @@ services:
         arguments:
             - '@Sowieso\ModalBundle\Modal\Controller'
         tags:
-            - { name: contao.frontend_module, category: application, type: sowiesoModal, template: mod_modal }
+            - { name: contao.frontend_module, category: application, type: sowiesoModal, template: modal }
 
     Sowieso\ModalBundle\Controller\ContentElement\ModalController:
         arguments:
             - '@Sowieso\ModalBundle\Modal\Controller'
         tags:
-            - { name: contao.content_element, category: links, type: sowiesoModal, template: ce_modal }
+            - { name: contao.content_element, category: links, type: sowiesoModal, template: modal }
