@@ -1,0 +1,34 @@
+# FMD
+sowiesoModal: Modal Text-Image-HTML
+sowiesoModal_info: A modal can be added which can display HTML or text and/or image. The start and end time for the display can be defined.
+
+# DCA
+content_type_legend: Content type settings
+modal_content_type: Content type
+modal_content_type_info: Select an appropriate content type for your modal.
+modal_content_type.text: Text + Image
+modal_content_type.image: Image
+modal_content_type.html: HTML
+modal_opening_type: Opening type
+modal_opening_type_info: Select how the modal should be opened.
+modal_opening_type.time: Time
+modal_opening_type.button: Button
+modal_opening_type.scroll: Scroll position
+text_legend: Text/HTML/Code
+modal_legend: Modal settings
+text: Text
+text_info: You can use HTML tags to format the text.
+url: Link address
+url_info: Enter a web address (http://...), an email address (mailto:...), or an insert tag.
+titleText: Link title
+titleText_info: The link title is inserted as a title attribute in the HTML markup.
+linkTitle: Link text
+linkTitle_info: The link text is displayed instead of the link address.
+button: Link text (optional)
+button_info: An additional button that can be used to open the modal.
+excluded_pages: Exclude pages
+excluded_pages_info: The modal is not output on the selected pages.
+start: Start at (seconds)
+start_info: The modal is displayed X seconds after the page is loaded. 0 means it is always displayed.
+stop: Stop until (days)
+stop_info: The modal is only displayed again after X days. 0 means that it is displayed immediately.

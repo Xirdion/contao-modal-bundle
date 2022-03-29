@@ -1,5 +1,5 @@
 # FMD
-sowiesoModal: Modal Text-Bild-Html
+sowiesoModal: Modal Text-Bild-HTML
 sowiesoModal_info: Es kann ein Modal hinzugefügt werden, welches HTML oder Text und/oder Bild anzeigen kann. Dabei kann die Start- und Endzeit für die Anzeige definiert werden.
 
 # DCA
@@ -14,7 +14,6 @@ modal_opening_type_info: Wählen Sie aus, wie das Modal geöffnet werden soll.
 modal_opening_type.time: Zeit
 modal_opening_type.button: Button
 modal_opening_type.scroll: Scrollposition
-text_legend: Text/HTML/Code
 modal_legend: Modal-Einstellungen
 text: Text
 text_info: Sie können HTML-Tags verwenden. um den Text zu formatieren.

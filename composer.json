@@ -1,7 +1,12 @@
 {
   "name": "sowieso/contao-modal-bundle",
   "type": "contao-bundle",
-  "description": "Add a modal element to your page",
+  "description": "Add a modal (dialog) element to your web page.",
+  "keywords": [
+    "contao",
+    "modal",
+    "dialog"
+  ],
   "license":"AGPL-3.0-or-later",
   "authors": [
     {

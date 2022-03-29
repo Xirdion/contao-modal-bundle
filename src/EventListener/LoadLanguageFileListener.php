@@ -45,22 +45,27 @@ class LoadLanguageFileListener
             return;
         }
 
-        switch ($name) {
-            case 'modules':
+        try {
+            match ($name) {
                 // Add general name of the content element type / module type
-                $this->addModuleTranslation();
-                break;
-            case 'tl_content':
-            case 'tl_module':
+                'default' => $this->addModuleTranslation(),
+
                 // Add additional translations for the DCA fields
-                $this->addDcaTranslations($name);
-                break;
+                'tl_content', 'tl_module' => $this->addDcaTranslations($name),
+            };
+        } catch (\UnhandledMatchError $e) {
+            return;
         }
     }
 
     private function addModuleTranslation(): void
     {
         $GLOBALS['TL_LANG']['FMD']['sowiesoModal'] = [
+            $this->translator->trans('sowiesoModal', [], $this->domain),
+            $this->translator->trans('sowiesoModal_info', [], $this->domain),
+        ];
+
+        $GLOBALS['TL_LANG']['CTE']['sowiesoModal'] = [
             $this->translator->trans('sowiesoModal', [], $this->domain),
             $this->translator->trans('sowiesoModal_info', [], $this->domain),
         ];
@@ -106,12 +111,11 @@ class LoadLanguageFileListener
         switch ($table) {
             case 'tl_content':
                 $GLOBALS['TL_LANG'][$table]['content_type_legend'] = $this->translator->trans('content_type_legend', [], $this->domain);
-                $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
+                $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('modal_legend', [], $this->domain);
                 break;
             case 'tl_module':
                 // Legends
                 $GLOBALS['TL_LANG'][$table]['content_type_legend'] = $this->translator->trans('content_type_legend', [], $this->domain);
-                $GLOBALS['TL_LANG'][$table]['text_legend'] = $this->translator->trans('text_legend', [], $this->domain);
                 $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
 
                 // Fields

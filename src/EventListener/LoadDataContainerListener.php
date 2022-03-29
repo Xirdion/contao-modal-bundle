@@ -75,9 +75,9 @@ class LoadDataContainerListener
 
         // Add additional sub palettes
         // content type
-        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_text'] = '{text_legend},text,{image_legend},singleSRC,' . $size;
-        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_image'] = '{image_legend},singleSRC,' . $size;
-        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_html'] = '{text_legend},html';
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_text'] = 'text,singleSRC,' . $size;
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_image'] = 'singleSRC,' . $size;
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_html'] = 'html';
 
         // opening type
         $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_opening_type_modal_time'] = 'modal_start,modal_stop';
