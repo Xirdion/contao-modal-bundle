@@ -1,5 +1,8 @@
 # Contao Modal Bundle
 
+![Packagist Version](https://img.shields.io/packagist/v/sowieso/contao-modal-bundle?label=version)
+![Packagist Downloads](https://img.shields.io/packagist/dt/sowieso/contao-modal-bundle?color=brigthgreen)
+
 This bundle adds the ability to show a **dialog element** in your Contao website.
 
 It uses the [HTMLDialogElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement) and its `showModal()` and `close()` methods to show and hide the content.
