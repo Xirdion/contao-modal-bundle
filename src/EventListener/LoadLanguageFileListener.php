@@ -116,7 +116,7 @@ class LoadLanguageFileListener
             case 'tl_module':
                 // Legends
                 $GLOBALS['TL_LANG'][$table]['content_type_legend'] = $this->translator->trans('content_type_legend', [], $this->domain);
-                $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('text_legend', [], $this->domain);
+                $GLOBALS['TL_LANG'][$table]['modal_legend'] = $this->translator->trans('modal_legend', [], $this->domain);
 
                 // Fields
                 $GLOBALS['TL_LANG'][$table]['text'] = [

@@ -17,6 +17,7 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
 use Contao\Model;
 use Contao\ModuleModel;
+use Sowieso\ModalBundle\Modal\ContentType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -26,8 +27,10 @@ class LoadDataContainerCallback
 {
     private Request $request;
 
-    public function __construct(RequestStack $requestStack)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        private ContentType $contentType,
+    ) {
         $request = $requestStack->getCurrentRequest();
         if (null === $request) {
             throw new \Exception('Missing Request object in ' . __CLASS__);
@@ -56,11 +59,16 @@ class LoadDataContainerCallback
             return;
         }
 
+        $contentType = $model->__get('modal_content_type');
+        $textMandatory = match ($contentType) {
+            $this->contentType::OPTION_IMAGE, $this->contentType::OPTION_HTML => false,
+            default => true,
+        };
         // text field should not be mandatory
-        $GLOBALS['TL_DCA'][$dataContainer->table]['fields']['text']['eval']['mandatory'] = false;
+        $GLOBALS['TL_DCA'][$dataContainer->table]['fields']['text']['eval']['mandatory'] = $textMandatory;
 
         // image field should not be mandatory
-        $GLOBALS['TL_DCA'][$dataContainer->table]['fields']['singleSRC']['eval']['mandatory'] = false;
+        $GLOBALS['TL_DCA'][$dataContainer->table]['fields']['singleSRC']['eval']['mandatory'] = ($this->contentType::OPTION_IMAGE === $contentType);
 
         // url field should not be mandatory
         $GLOBALS['TL_DCA'][$dataContainer->table]['fields']['url']['eval']['mandatory'] = false;

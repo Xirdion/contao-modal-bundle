@@ -14,6 +14,7 @@ namespace Sowieso\ModalBundle\EventListener\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
+use Sowieso\ModalBundle\Modal\OpeningType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsCallback('tl_content', 'fields.modal_content_type.options', 'onGetContentTypeOptions')]
@@ -22,22 +23,23 @@ class OpeningTypeOptionsCallback
 {
     public function __construct(
         private TranslatorInterface $translator,
+        private OpeningType $openingType,
     ) {
     }
 
     /**
      * @param DataContainer|null $dataContainer
      *
-     * @return array<string, string>
+     * @return array<string|int, string>
      */
     public function onGetOpeningTypeOptions(?DataContainer $dataContainer): array
     {
         $domain = 'SowiesoModalBundle';
 
         return [
-            'modal_time' => $this->translator->trans('modal_opening_type.time', [], $domain),
-            'modal_button' => $this->translator->trans('modal_opening_type.button', [], $domain),
-            'modal_scroll' => $this->translator->trans('modal_opening_type.scroll', [], $domain),
+            $this->openingType::OPTION_TIME => $this->translator->trans('modal_opening_type.time', [], $domain),
+            $this->openingType::OPTION_BUTTON => $this->translator->trans('modal_opening_type.button', [], $domain),
+            $this->openingType::OPTION_SCROLL => $this->translator->trans('modal_opening_type.scroll', [], $domain),
         ];
     }
 }

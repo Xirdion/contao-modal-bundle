@@ -31,6 +31,8 @@ class Builder
         private ScopeMatcher $scopeMatcher,
         private Studio $studio,
         private InsertTagParser $tagParser,
+        private ContentType $contentType,
+        private OpeningType $openingType,
     ) {
     }
 
@@ -110,22 +112,27 @@ class Builder
         $modalData['contentId'] = 'modalContent-' . $modalId;
         $contentType = $this->model->__get('modal_content_type');
         match ($contentType) {
-            'modal_image' => $this->addImageData($modalData),
-            'modal_html' => $this->addHtmlData($modalData),
+            $this->contentType::OPTION_IMAGE => $this->addImageData($modalData),
+            $this->contentType::OPTION_HTML => $this->addHtmlData($modalData),
             default => $this->addTextData($modalData),
         };
 
         // Link data
-        // If a single image is the only content of the modal the extra link should not get generated
-        $modalData['url'] = ('modal_image' !== $contentType ? $this->model->__get('url') : '');
-        $modalData['target'] = $this->model->__get('target');
-        $modalData['linkTitle'] = $this->model->__get('linkTitle') ?: $this->model->__get('url');
-        $modalData['titleText'] = $this->model->__get('titleText');
+        // Only modals with a text element can show the link
+        // Is the image option selected, the image itself will get the link
+        if ($this->contentType::OPTION_TEXT === $contentType) {
+            $modalData['url'] = $this->model->__get('url');
+            $modalData['target'] = $this->model->__get('target');
+            $modalData['linkTitle'] = $this->model->__get('linkTitle') ?: $this->model->__get('url');
+            $modalData['titleText'] = $this->model->__get('titleText');
+        } else {
+            $modalData['url'] = '';
+        }
 
         $openingType = $this->model->__get('modal_opening_type');
         $modalData['openingType'] = match ($openingType) {
-            'modal_button' => 'button',
-            'modal_scroll' => 'scroll',
+            $this->openingType::OPTION_BUTTON => 'button',
+            $this->openingType::OPTION_SCROLL => 'scroll',
             default => 'time',
         };
 
@@ -137,11 +144,11 @@ class Builder
         ];
 
         // Add additional modal opening button
-        if ('modal_button' === $openingType) {
+        if ($this->openingType::OPTION_BUTTON === $openingType) {
             $modalData['modalButton'] = $this->model->__get('modal_button');
         }
 
-        if ('modal_scroll' === $openingType) {
+        if ($this->openingType::OPTION_SCROLL === $openingType) {
             // Add additional modal class
             $modalData['modalClass'] .= ' js-modal-scroll';
             $modalData['modalStop'] = (int) $this->model->__get('modal_stop') * 1000;
@@ -149,7 +156,7 @@ class Builder
         }
 
         // Add start and stop properties
-        if ('modal_time' === $openingType) {
+        if ($this->openingType::OPTION_TIME === $openingType) {
             // Add additional modal class
             $modalData['modalClass'] .= ' js-modal-time';
             $modalData['modalStart'] = (int) $this->model->__get('modal_start') * 1000;
@@ -187,6 +194,12 @@ class Builder
 
     private function isModalPage(?PageModel $page, string $url): bool
     {
+        // Check if an url is given
+        if ('' === $url) {
+            return false;
+        }
+
+        // Check if the current page was correctly loaded
         if (null === $page) {
             return false;
         }
@@ -200,7 +213,7 @@ class Builder
         $url = $this->tagParser->replace($url);
 
         // Set url to an empty string if it is "./" as this indicates the start page
-        $url = './' === $url ? '' : $url;
+        $url = ('./' === $url ? '' : $url);
 
         return $page->getFrontendUrl() === $url;
     }

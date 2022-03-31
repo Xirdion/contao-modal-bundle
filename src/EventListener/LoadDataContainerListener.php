@@ -47,7 +47,6 @@ class LoadDataContainerListener
         $size = ('tl_module' === $table ? 'imgSize' : 'size');
         $palette = <<<'PALETTE'
             {content_type_legend},modal_content_type;
-            {link_legend},url,target,linkTitle,titleText;
             {modal_legend},modal_excludedPages,modal_opening_type;
             {template_legend:hide},customTpl;
             {protected_legend:hide},protected;
@@ -75,8 +74,8 @@ class LoadDataContainerListener
 
         // Add additional sub palettes
         // content type
-        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_text'] = 'text,singleSRC,' . $size;
-        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_image'] = 'singleSRC,' . $size;
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_text'] = 'text,singleSRC,' . $size . ';{link_legend},url,target,linkTitle,titleText;';
+        $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_image'] = 'singleSRC,' . $size . ';{link_legend},url,target,linkTitle,titleText;';
         $GLOBALS['TL_DCA'][$table]['subpalettes']['modal_content_type_modal_html'] = 'html';
 
         // opening type

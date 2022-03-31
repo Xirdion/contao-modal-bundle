@@ -14,6 +14,7 @@ namespace Sowieso\ModalBundle\EventListener\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
+use Sowieso\ModalBundle\Modal\ContentType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsCallback('tl_content', 'fields.modal_content_type.options', 'onGetContentTypeOptions')]
@@ -22,31 +23,23 @@ class ContentTypeOptionsCallback
 {
     public function __construct(
         private TranslatorInterface $translator,
+        private ContentType $contentType,
     ) {
     }
 
     /**
      * @param DataContainer|null $dataContainer
      *
-     * @return array<string, string>
+     * @return array<string|int, string>
      */
     public function onGetContentTypeOptions(?DataContainer $dataContainer): array
     {
         $domain = 'SowiesoModalBundle';
 
         return [
-            'modal_text' => $this->translator->trans('modal_content_type.text', [], $domain),
-            'modal_image' => $this->translator->trans('modal_content_type.image', [], $domain),
-            'modal_html' => $this->translator->trans('modal_content_type.html', [], $domain),
+            $this->contentType::OPTION_TEXT => $this->translator->trans('modal_content_type.text', [], $domain),
+            $this->contentType::OPTION_IMAGE => $this->translator->trans('modal_content_type.image', [], $domain),
+            $this->contentType::OPTION_HTML => $this->translator->trans('modal_content_type.html', [], $domain),
         ];
-    }
-
-    public static function getContentClass(string $type): string
-    {
-        return match ($type) {
-            'modal_image' => 'ce_image',
-            'modal_html' => 'ce_html',
-            default => 'ce_text',
-        };
     }
 }

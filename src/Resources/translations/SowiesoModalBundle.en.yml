@@ -14,7 +14,6 @@ modal_opening_type_info: Select how the modal should be opened.
 modal_opening_type.time: Time
 modal_opening_type.button: Button
 modal_opening_type.scroll: Scroll position
-text_legend: Text/HTML/Code
 modal_legend: Modal settings
 text: Text
 text_info: You can use HTML tags to format the text.

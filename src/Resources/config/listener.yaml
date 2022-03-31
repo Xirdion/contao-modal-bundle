@@ -11,6 +11,7 @@ services:
   Sowieso\ModalBundle\EventListener\DataContainer\LoadDataContainerCallback:
     arguments:
       - '@request_stack'
+      - '@Sowieso\ModalBundle\Modal\ContentType'
     tags:
       - { name: contao.callback, table: tl_content, target: config.onload, method: onLoadDataContainer }
       - { name: contao.callback, table: tl_module, target: config.onload, method: onLoadDataContainer }
@@ -18,6 +19,7 @@ services:
   Sowieso\ModalBundle\EventListener\DataContainer\ContentTypeOptionsCallback:
     arguments:
       - '@translator'
+      - '@Sowieso\ModalBundle\Modal\ContentType'
     tags:
       - { name: contao.callback, table: tl_content, target: fields.modal_content_type.options, method: onGetContentTypeOptions }
       - { name: contao.callback, table: tl_module, target: fields.modal_content_type.options, method: onGetContentTypeOptions }
@@ -25,6 +27,7 @@ services:
   Sowieso\ModalBundle\EventListener\DataContainer\OpeningTypeOptionsCallback:
     arguments:
       - '@translator'
+      - '@Sowieso\ModalBundle\Modal\OpeningType'
     tags:
       - { name: contao.callback, table: tl_content, target: fields.modal_opening_type.options, method: onGetOpeningTypeOptions }
       - { name: contao.callback, table: tl_module, target: fields.modal_opening_type.options, method: onGetOpeningTypeOptions }
