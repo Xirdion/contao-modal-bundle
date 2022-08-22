@@ -39,7 +39,7 @@ class ContaoModalExtension extends Extension
             $loader->load('listener.yaml');
         } catch (\Exception $e) {
             echo $e->getMessage();
-            exit();
+            exit;
         }
     }
 }
