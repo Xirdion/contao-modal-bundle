@@ -192,10 +192,16 @@ class Builder
         return \in_array($page->id, $excludedPages, true);
     }
 
-    private function isModalPage(?PageModel $page, string $url): bool
+    /**
+     * @param PageModel|null $page
+     * @param string|null    $url
+     *
+     * @return bool
+     */
+    private function isModalPage(?PageModel $page, ?string $url): bool
     {
         // Check if an url is given
-        if ('' === $url) {
+        if (!$url) {
             return false;
         }
 
