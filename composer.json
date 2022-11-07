@@ -1,5 +1,5 @@
 {
-  "name": "sowieso/contao-modal-bundle",
+  "name": "xirdion/contao-modal-bundle",
   "type": "contao-bundle",
   "description": "Add a modal (dialog) element to your web page.",
   "keywords": [
@@ -10,9 +10,8 @@
   "license":"AGPL-3.0-or-later",
   "authors": [
     {
-      "name": "SowieSo GmbH & Co.KG",
-      "email": "development@sowieso.team",
-      "homepage": "https://sowieso.team"
+      "name": "Thomas Dirscherl",
+      "homepage": "https://github.com/xirdion"
     }
   ],
   "require": {
